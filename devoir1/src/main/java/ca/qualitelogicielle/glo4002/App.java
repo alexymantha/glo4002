@@ -1,5 +1,8 @@
 package ca.qualitelogicielle.glo4002;
 
+import ca.qualitelogicielle.glo4002.VisibleSymptom;
+import ca.qualitelogicielle.glo4002.TriageType;
+
 /**
  * Hello world!
  */
