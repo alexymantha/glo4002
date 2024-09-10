@@ -31,11 +31,24 @@ public class Clinic {
             }
         }
 
-        if (newPatient.symptom == VisibleSymptom.SPRAIN
-                || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
-            radioList.add(newPatient);
+        if (radioTriage == TriageType.FIFO) {
+            if (newPatient.symptom == VisibleSymptom.SPRAIN
+                    || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
+                radioList.add(newPatient);
+            }
+        } else if (radioTriage == TriageType.GRAVITY) {
+            if (newPatient.symptom == VisibleSymptom.SPRAIN
+                    || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
+                if (newPatient.gravity <= 5) {
+                    radioList.add(newPatient);
+                } else if (newPatient.gravity > 5) {
+                    radioList.add(0, newPatient);
+                }
+            }
         }
     }
+
+    
 
     public int getdoctorListLenght() {
         return doctorList.size();
@@ -48,8 +61,8 @@ public class Clinic {
     public Patient getPatientAtPositionDoctorList(int i) {
         return doctorList.get(i - 1);
     }
+
     public Patient getPatientAtPositionRadioList(int i) {
         return radioList.get(i - 1);
     }
 }
-
