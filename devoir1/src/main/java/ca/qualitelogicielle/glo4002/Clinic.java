@@ -7,33 +7,49 @@ public class Clinic {
     TriageType doctorTriage;
     TriageType radioTriage;
     private List<Patient> radioList;
-    private List<Patient>  doctorList;
+    private List<Patient> doctorList;
 
-    public Clinic(TriageType doctor, TriageType radio){
+    public Clinic(TriageType doctor, TriageType radio) {
         doctorTriage = doctor;
         radioTriage = radio;
         radioList = new ArrayList<>();
         doctorList = new ArrayList<>();
     }
-    public boolean isClinicEmpty(){
+
+    public boolean isClinicEmpty() {
         return radioList.isEmpty() && doctorList.isEmpty();
     }
-    public void addPatient(Patient newPatient){
-        doctorList.add(newPatient);
-        if(newPatient.symptom == VisibleSymptom.SPRAIN
-                || newPatient.symptom == VisibleSymptom.BROKEN_BONE){
+
+    public void addPatient(Patient newPatient) {
+        if (doctorTriage == TriageType.FIFO) {
+            doctorList.add(newPatient);
+        } else if (doctorTriage == TriageType.GRAVITY) {
+            if (newPatient.gravity <= 5) {
+                doctorList.add(newPatient);
+            } else if (newPatient.gravity > 5) {
+                doctorList.add(0, newPatient);
+            }
+        }
+
+        if (newPatient.symptom == VisibleSymptom.SPRAIN
+                || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
             radioList.add(newPatient);
         }
     }
-    public int getdoctorListLenght(){
+
+    public int getdoctorListLenght() {
         return doctorList.size();
     }
-    public int getradioListLenght(){
+
+    public int getradioListLenght() {
         return radioList.size();
     }
-
 
     public Patient getPatientAtPositionDoctorList(int i) {
         return doctorList.get(i - 1);
     }
+    public Patient getPatientAtPositionRadioList(int i) {
+        return radioList.get(i - 1);
+    }
 }
+

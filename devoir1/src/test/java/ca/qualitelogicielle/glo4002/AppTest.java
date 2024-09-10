@@ -128,5 +128,35 @@ public class AppTest {
         assertEquals(test.getradioListLenght(), 1);
     }
 
+    @Test
+    public void shouldHigherPriorityPatientBeFirstInDoctorList() { 
+        TriageType DoctorTriage = TriageType.GRAVITY;
+        TriageType RadiologieTriage = TriageType.FIFO;
+        Clinic test = new Clinic(DoctorTriage, RadiologieTriage);
+        Patient Mario = new Patient("Mario", 3, VisibleSymptom.MIGRAINE);
+        Patient patientUrgent = new Patient("patientUrgent", 7, VisibleSymptom.FLU);
+        test.addPatient(Mario);
+        test.addPatient(patientUrgent);
+        assertEquals(test.getdoctorListLenght(), 2);
+        assertEquals(test.getPatientAtPositionDoctorList(1), patientUrgent);
+    }
+
+    @Test
+    public void shouldHigherPriorityPatientBeFirstInDoctorListAndSecondInRadio() { 
+        TriageType DoctorTriage = TriageType.GRAVITY;
+        TriageType RadiologieTriage = TriageType.FIFO;
+        Clinic test = new Clinic(DoctorTriage, RadiologieTriage);
+        Patient Mario = new Patient("Mario", 3, VisibleSymptom.MIGRAINE);
+        Patient patientRadio = new Patient("patientRadio", 4, VisibleSymptom.BROKEN_BONE);
+        Patient patientUrgent = new Patient("patientUrgent", 7, VisibleSymptom.SPRAIN);
+        test.addPatient(Mario);
+        test.addPatient(patientRadio);
+        test.addPatient(patientUrgent);
+        assertEquals(test.getdoctorListLenght(), 3);
+        assertEquals(test.getradioListLenght(), 2);
+        assertEquals(test.getPatientAtPositionDoctorList(1), patientUrgent);
+        assertEquals(test.getPatientAtPositionRadioList(2), patientUrgent);
+    }
 
 }
+
