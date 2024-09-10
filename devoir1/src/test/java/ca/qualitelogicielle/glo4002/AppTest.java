@@ -180,4 +180,23 @@ public class AppTest {
         assertEquals(test.getPatientAtPositionDoctorList(1), patientUrgent);
         assertEquals(test.getPatientAtPositionRadioList(1), patientUrgent);
     }
+
+    @Test
+    public void PatientHaveCoronaNotAdded() {
+        TriageType DoctorTriage = TriageType.GRAVITY;
+        TriageType RadiologieTriage = TriageType.GRAVITY;
+        Clinic test = new Clinic(DoctorTriage, RadiologieTriage);
+        Patient Mario = new Patient("Mario", 3, VisibleSymptom.SPRAIN);
+        Patient patientUrgent = new Patient("patientUrgent", 7, VisibleSymptom.SPRAIN);
+        Patient CoronaBoi = new Patient("CoronaBoi", 7, VisibleSymptom.CORONAVIRUS);
+        test.addPatient(Mario);
+        test.addPatient(patientUrgent);
+        test.addPatient(CoronaBoi);
+        assertEquals(test.getdoctorListLenght(), 2);
+        assertEquals(test.getradioListLenght(), 2);
+        assertEquals(test.getPatientAtPositionDoctorList(1), patientUrgent);
+        assertEquals(test.getPatientAtPositionRadioList(1), patientUrgent);
+    }
+
+
 }

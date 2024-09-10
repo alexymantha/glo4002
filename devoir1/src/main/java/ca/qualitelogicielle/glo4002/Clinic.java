@@ -21,34 +21,34 @@ public class Clinic {
     }
 
     public void addPatient(Patient newPatient) {
-        if (doctorTriage == TriageType.FIFO) {
-            doctorList.add(newPatient);
-        } else if (doctorTriage == TriageType.GRAVITY) {
-            if (newPatient.gravity <= 5) {
+        if (newPatient.symptom != VisibleSymptom.CORONAVIRUS) {
+            if (doctorTriage == TriageType.FIFO) {
                 doctorList.add(newPatient);
-            } else if (newPatient.gravity > 5) {
-                doctorList.add(0, newPatient);
-            }
-        }
-
-        if (radioTriage == TriageType.FIFO) {
-            if (newPatient.symptom == VisibleSymptom.SPRAIN
-                    || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
-                radioList.add(newPatient);
-            }
-        } else if (radioTriage == TriageType.GRAVITY) {
-            if (newPatient.symptom == VisibleSymptom.SPRAIN
-                    || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
+            } else if (doctorTriage == TriageType.GRAVITY) {
                 if (newPatient.gravity <= 5) {
-                    radioList.add(newPatient);
+                    doctorList.add(newPatient);
                 } else if (newPatient.gravity > 5) {
-                    radioList.add(0, newPatient);
+                    doctorList.add(0, newPatient);
+                }
+            }
+
+            if (radioTriage == TriageType.FIFO) {
+                if (newPatient.symptom == VisibleSymptom.SPRAIN
+                        || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
+                    radioList.add(newPatient);
+                }
+            } else if (radioTriage == TriageType.GRAVITY) {
+                if (newPatient.symptom == VisibleSymptom.SPRAIN
+                        || newPatient.symptom == VisibleSymptom.BROKEN_BONE) {
+                    if (newPatient.gravity <= 5) {
+                        radioList.add(newPatient);
+                    } else if (newPatient.gravity > 5) {
+                        radioList.add(0, newPatient);
+                    }
                 }
             }
         }
     }
-
-    
 
     public int getdoctorListLenght() {
         return doctorList.size();
